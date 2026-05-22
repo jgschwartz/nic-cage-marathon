@@ -80,12 +80,14 @@ Movies are stored in `movies.json`. Each entry has:
 
 **To add a movie:**
 
-1. Add an entry to `movies.json` with at minimum `id`, `title`, `year`, and `imdbId`
-2. Run `python3 enrich-movies.py` to auto-fill `posterUrl`, `imdbRating`, `rtCriticRating`, and `runtime` from the OMDb API
-3. Manually fill in:
-   - `rtUrl` — copy the path from the movie's Rotten Tomatoes URL (e.g. `/m/raising_arizona`)
-   - `rtAudienceRating` — not available from OMDb; enter from the RT page
-   - `"fresh": true` — add only if the movie is Certified Fresh on RT
+1. Look up the movie on IMDb and copy the `tt` ID from the URL (e.g. `imdb.com/title/tt0093624/` → `"tt0093624"`)
+2. Add an entry to `movies.json` with `id`, `title`, `year`, `imdbId`, and a short `plot` (written or copied from IMDb/RT)
+3. Run `python3 enrich-movies.py` — this auto-fills `posterUrl`, `imdbRating`, `rtCriticRating`, and `runtime` from the OMDb API
+4. Manually fill in and verify the remaining fields from the Rotten Tomatoes page:
+   - `rtUrl` — the path from the RT URL (e.g. `/m/raising_arizona`)
+   - `rtAudienceRating` — not available from OMDb
+   - `rtCriticRating` — verify against RT directly; OMDb's score can be stale or missing
+   - `"fresh": true` — add only if the movie is Certified Fresh
 
 The OMDb API key is hardcoded at the top of `enrich-movies.py`. Get a free key at https://www.omdbapi.com/apikey.aspx if you need to replace it.
 
