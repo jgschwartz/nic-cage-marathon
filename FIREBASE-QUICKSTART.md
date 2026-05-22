@@ -11,7 +11,7 @@
 
 1. Go to https://firebase.google.com
 2. Click "Get Started" → "Create a project"
-3. Name: `nic-cage-marathon` (or your own name)
+3. Name it (e.g. `nic-cage-marathon`)
 4. Disable Google Analytics (not needed)
 5. Click "Create project"
 
@@ -66,6 +66,12 @@ The `firebase.json` is already configured: the project root is the public direct
 ---
 
 ## Testing Locally
+
+**Option 1: VS Code Live Server** (simplest)
+
+Install the [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer), right-click `voting-form.html` → "Open with Live Server". Changes are reflected in real time on save.
+
+**Option 2: Firebase CLI**
 
 ```bash
 firebase serve
