@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nic Cage Marathon Voting</title>
-    <link rel="icon" href="nic-cage-vampires-kiss-favicon.jpg" type="image/png">
+    <link rel="icon" href="assets/nic-cage-vampires-kiss-favicon.jpg" type="image/png">
     <style>
         * {
             margin: 0;
@@ -468,7 +468,7 @@
 <body>
     <div class="container">
         <header>
-            <h1><img src="nic-cage-vampires-kiss-favicon2.jpeg" style="height:1em;vertical-align:middle;border-radius:3px;"> Nic Cage Marathon Voting <img src="nic-cage-vampires-kiss-favicon2.jpeg" style="height:1em;vertical-align:middle;border-radius:3px;"></h1>
+            <h1><img src="assets/nic-cage-vampires-kiss-favicon2.jpeg" style="height:1em;vertical-align:middle;border-radius:3px;"> Nic Cage Marathon Voting <img src="assets/nic-cage-vampires-kiss-favicon2.jpeg" style="height:1em;vertical-align:middle;border-radius:3px;"></h1>
             <p>Vote on which movies to include in our epic Saturday marathon!</p>
         </header>
 
@@ -711,21 +711,21 @@
             if (movie.rtCriticRating != null) {
                 const isCertifiedFresh = movie.fresh === true;
                 const isFresh = movie.rtCriticRating >= 60;
-                const criticImg = isCertifiedFresh ? 'rt-certified-fresh.png' : isFresh ? 'rt-fresh.png' : 'rt-rotten.png';
+                const criticImg = isCertifiedFresh ? 'assets/rt-certified-fresh.png' : isFresh ? 'assets/rt-fresh.png' : 'assets/rt-rotten.png';
                 const criticAlt = isCertifiedFresh ? 'Certified Fresh' : isFresh ? 'Fresh' : 'Rotten';
                 rtContent += `<span style="margin-right: 8px;"><img src="${criticImg}" class="rating-image" alt="${criticAlt}"><span class="rating-score">${movie.rtCriticRating}%</span></span>`;
             } else {
-                rtContent += `<span style="margin-right: 8px;"><img src="rt-faded-tomato.png" class="rating-image" alt="No critic rating"><span class="rating-score">N/A</span></span>`;
+                rtContent += `<span style="margin-right: 8px;"><img src="assets/rt-faded-tomato.png" class="rating-image" alt="No critic rating"><span class="rating-score">N/A</span></span>`;
             }
 
             // Audience rating with image
             if (movie.rtAudienceRating != null) {
                 const isFullPopcorn = movie.rtAudienceRating >= 60;
-                const audienceImg = isFullPopcorn ? 'rt-popcorn.png' : 'rt-spilled.png';
+                const audienceImg = isFullPopcorn ? 'assets/rt-popcorn.png' : 'assets/rt-spilled.png';
                 const audienceAlt = isFullPopcorn ? 'Upright popcorn' : 'Spilled popcorn';
                 rtContent += `<span><img src="${audienceImg}" class="rating-image" alt="${audienceAlt}"><span class="rating-score">${movie.rtAudienceRating}%</span></span>`;
             } else {
-                rtContent += `<span><img src="rt-faded-popcorn.png" class="rating-image" alt="No audience rating"><span class="rating-score">N/A</span></span>`;
+                rtContent += `<span><img src="assets/rt-faded-popcorn.png" class="rating-image" alt="No audience rating"><span class="rating-score">N/A</span></span>`;
             }
             
             rtLink.innerHTML = rtContent;
