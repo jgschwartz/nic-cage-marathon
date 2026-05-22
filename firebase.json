@@ -1,0 +1,22 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.*",
+      "*.md",
+      "*.py",
+      "example-vote.json"
+    ],
+    "rewrites": [
+      {
+        "source": "/",
+        "destination": "/voting-form.html"
+      }
+    ]
+  }
+}

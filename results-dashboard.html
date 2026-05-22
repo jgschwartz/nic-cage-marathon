@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nic Cage Marathon - Results & Ranking</title>
+    <link rel="icon" href="nic-cage-vampires-kiss-favicon.jpg" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2a2a3e 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #ffd700;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .status-section {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #ffd700;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .status-section.live {
+            background: rgba(144, 238, 144, 0.1);
+            border-color: #90ee90;
+            color: #90ee90;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #2a2a3e;
+            border: 1px solid #444;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.95em;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #ffd700;
+            color: #1e1e2e;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ffed4e;
+        }
+
+        button.secondary {
+            background: #666;
+            color: #fff;
+        }
+
+        button.secondary:hover {
+            background: #777;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        h2 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ffd700;
+        }
+
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .ranking-item {
+            background: #2a2a3e;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 60px 1fr 150px;
+            gap: 20px;
+            align-items: center;
+            transition: border-color 0.3s;
+        }
+
+        .ranking-item:hover {
+            border-color: #ffd700;
+        }
+
+        .ranking-position {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffd700;
+            text-align: center;
+        }
+
+        .movie-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .movie-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .movie-subtitle {
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        .score-breakdown {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 1.3em;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 0.8em;
+            color: #999;
+        }
+
+        .voters-list {
+            background: #1a1a2e;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #bbb;
+            max-height: 60px;
+            overflow-y: auto;
+        }
+
+        .voters-list strong {
+            color: #ffd700;
+        }
+
+        .export-section {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .export-section h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .export-formats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .error {
+            background: #5f2d2e;
+            color: #ff6b6b;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #ff6b6b;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #ffd700;
+            font-size: 1.2em;
+        }
+
+        .schedule-preview {
+            background: #2a2a3e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .schedule-preview h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .time-slot {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 15px;
+            padding: 12px;
+            border-bottom: 1px solid #444;
+            font-size: 0.95em;
+        }
+
+        .time-slot:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .movie-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .duration {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .ranking-item {
+                grid-template-columns: 1fr;
+            }
+
+            .score-breakdown {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1><img src="nic-cage-vampires-kiss.png" style="height:1em;vertical-align:middle;border-radius:3px;"> Nic Cage Marathon - Results <img src="nic-cage-vampires-kiss.png" style="height:1em;vertical-align:middle;border-radius:3px;"></h1>
+            <p>Real-time vote aggregation and ranking</p>
+        </header>
+
+        <div class="status-section" id="statusSection">
+            📡 Connecting to Firebase...
+        </div>
+
+        <div class="error" id="errorMessage"></div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalVoters">0</div>
+                <div class="stat-label">Voters</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalMovies">0</div>
+                <div class="stat-label">Movies Voted On</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgVotes">0%</div>
+                <div class="stat-label">Avg Interest</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="refreshResults()" style="margin-left: auto;">🔄 Refresh</button>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h2>📊 Final Rankings</h2>
+            <p style="color: #999; margin-bottom: 20px;">
+                Ranked by: % of voters interested × average rating weight
+            </p>
+            <div class="ranking-list" id="rankingList"></div>
+
+            <div class="schedule-preview">
+                <h3>📅 Sample Schedule (Starting at 10 AM)</h3>
+                <p style="color: #999; margin-bottom: 15px; font-size: 0.9em;">
+                    Popular movies scheduled for afternoon/evening.
+                </p>
+                <div id="schedulePreview"></div>
+            </div>
+
+            <div class="schedule-preview" id="writeInsSection" style="display:none;">
+                <h3>🎬 Write-In Candidates</h3>
+                <p style="color:#999;margin-bottom:15px;font-size:0.9em;">Movies suggested by voters that aren't on the main list.</p>
+                <div id="writeInResults"></div>
+            </div>
+
+            <div class="schedule-preview" id="foodPairingsSection" style="display:none;">
+                <h3>🍕 Food Pairing Ideas</h3>
+                <div id="foodPairingsResults"></div>
+            </div>
+
+            <div class="schedule-preview" id="commentsSection">
+                <h3>💬 Voter Comments</h3>
+                <div id="commentsLock" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                    <input type="password" id="commentsPassphrase" placeholder="Passphrase to unlock comments..."
+                        style="padding:8px 12px;background:#333;border:1px solid #555;color:#fff;border-radius:4px;flex:1;min-width:180px;">
+                    <button id="commentsUnlockBtn" style="padding:8px 14px;background:#6c63ff;color:#fff;border:none;border-radius:4px;cursor:pointer;">Unlock</button>
+                    <span id="commentsUnlockError" style="color:#f66;font-size:0.85em;display:none;">Wrong passphrase.</span>
+                </div>
+                <div id="commentsResults" style="display:none;margin-top:16px;"></div>
+            </div>
+
+            <div class="export-section">
+                <h3>💾 Export Results</h3>
+                <div class="export-formats">
+                    <button onclick="exportJSON()">📄 Export as JSON</button>
+                    <button class="secondary" onclick="exportCSV()">📊 Export as CSV</button>
+                    <button class="secondary" onclick="copyScheduleToClipboard()">📋 Copy Schedule</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, query, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCeU6FU8eCwvso2a4fC69WTiGNsarrDJlo",
+            authDomain: "nic-cage-marathon.firebaseapp.com",
+            projectId: "nic-cage-marathon",
+            storageBucket: "nic-cage-marathon.firebasestorage.app",
+            messagingSenderId: "712398465137",
+            appId: "1:712398465137:web:9f36702a583f9566d493d0"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make Firebase available globally
+        window.db = db;
+        window.collection = collection;
+        window.query = query;
+        window.onSnapshot = onSnapshot;
+    </script>
+
+    <script type="module">
+        let allVotes = [];
+        let movies = [];
+
+        // Load movies database
+        async function loadMovies() {
+            try {
+                const response = await fetch('movies.json');
+                movies = await response.json();
+            } catch (error) {
+                console.error('Error loading movies:', error);
+            }
+        }
+
+        // Listen to votes in real-time
+        function setupRealtimeListener() {
+            const statusSection = document.getElementById('statusSection');
+
+            try {
+                const q = window.query(window.collection(window.db, 'votes'));
+
+                window.onSnapshot(q, (snapshot) => {
+                    allVotes = [];
+                    snapshot.forEach((doc) => {
+                        allVotes.push(doc.data());
+                    });
+
+                    // Update status
+                    if (allVotes.length > 0) {
+                        statusSection.classList.add('live');
+                        statusSection.textContent = `✓ Live (${allVotes.length} voter${allVotes.length !== 1 ? 's' : ''})`;
+                    } else {
+                        statusSection.classList.remove('live');
+                        statusSection.textContent = '⏳ Waiting for votes...';
+                    }
+
+                    // Regenerate rankings
+                    regenerateRankings();
+                });
+            } catch (error) {
+                statusSection.textContent = '✗ Connection Error';
+                statusSection.style.borderColor = '#ff6b6b';
+                statusSection.style.color = '#ff6b6b';
+                showError('Firebase error: ' + error.message);
+                console.error('Firestore error:', error);
+            }
+        }
+
+        function regenerateRankings() {
+            if (allVotes.length === 0) {
+                document.getElementById('resultsSection').classList.remove('show');
+                return;
+            }
+
+            // Aggregate votes
+            const movieScores = {};
+            const totalVoters = allVotes.length;
+
+            allVotes.forEach(vote => {
+                Object.entries(vote.votes || {}).forEach(([movieId, voteData]) => {
+                    if (!movieScores[movieId]) {
+                        const movie = movies.find(m => m.id == movieId);
+                        movieScores[movieId] = {
+                            id: movieId,
+                            title: movie ? movie.title : `Movie ${movieId}`,
+                            interestedCount: 0,
+                            totalRating: 0,
+                            votersInterested: [],
+                            ratings: []
+                        };
+                    }
+
+                    if (voteData.interested) {
+                        movieScores[movieId].interestedCount++;
+                        movieScores[movieId].votersInterested.push(vote.voter);
+                    }
+
+                    if (voteData.rating > 0) {
+                        movieScores[movieId].totalRating += voteData.rating;
+                        movieScores[movieId].ratings.push(voteData.rating);
+                    }
+                });
+            });
+
+            // Calculate scores
+            const ranked = Object.values(movieScores)
+                .map(movie => {
+                    const interestPercentage = (movie.interestedCount / totalVoters) * 100;
+                    const avgRating = movie.ratings.length > 0
+                        ? (movie.totalRating / movie.ratings.length) / 5
+                        : 0;
+
+                    // Scoring: 70% interest level, 30% average rating weight
+                    const score = (interestPercentage * 0.7) + (avgRating * 100 * 0.3);
+
+                    return {
+                        ...movie,
+                        interestPercentage,
+                        avgRating: movie.ratings.length > 0 ? (movie.totalRating / movie.ratings.length).toFixed(1) : 0,
+                        score: score.toFixed(2),
+                        ratingsCount: movie.ratings.length
+                    };
+                })
+                .filter(m => m.interestedCount > 0)
+                .sort((a, b) => b.score - a.score);
+
+            displayRankings(ranked, totalVoters);
+            generateSchedulePreview(ranked);
+            updateStats(ranked, totalVoters);
+            displayWriteIns();
+            displayFoodPairings();
+            displayComments();
+
+            document.getElementById('resultsSection').classList.add('show');
+        }
+
+        function displayWriteIns() {
+            const map = new Map();
+            allVotes.forEach(vote => {
+                const voter = vote.voter || 'Anonymous';
+                (vote.writeIns || []).forEach(w => {
+                    const key = w.key || w.title.toLowerCase();
+                    if (!map.has(key)) map.set(key, { title: w.title, voters: [] });
+                    map.get(key).voters.push({ name: voter, enthusiasm: w.enthusiasm || 0 });
+                });
+            });
+
+            const section = document.getElementById('writeInsSection');
+            const container = document.getElementById('writeInResults');
+            container.textContent = '';
+            if (map.size === 0) { section.style.display = 'none'; return; }
+            section.style.display = '';
+
+            const sorted = [...map.values()].sort((a, b) => b.voters.length - a.voters.length);
+            sorted.forEach(entry => {
+                const row = document.createElement('div');
+                row.className = 'ranking-item';
+                row.style.cssText = 'display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;';
+
+                const titleEl = document.createElement('div');
+                titleEl.style.cssText = 'flex:1;min-width:120px;';
+                const strong = document.createElement('strong');
+                strong.textContent = entry.title;
+                titleEl.appendChild(strong);
+
+                const avgEnth = entry.voters.reduce((s, v) => s + v.enthusiasm, 0) / entry.voters.length;
+                const starsEl = document.createElement('div');
+                starsEl.style.cssText = 'color:#ffd700;font-size:1.1em;';
+                starsEl.textContent = '★'.repeat(Math.round(avgEnth)) + '☆'.repeat(5 - Math.round(avgEnth));
+
+                const voterEl = document.createElement('div');
+                voterEl.style.cssText = 'font-size:0.85em;color:#aaa;';
+                voterEl.textContent = `${entry.voters.length} voter${entry.voters.length !== 1 ? 's' : ''}: ${entry.voters.map(v => `${v.name} (${v.enthusiasm}★)`).join(', ')}`;
+
+                row.appendChild(titleEl);
+                row.appendChild(starsEl);
+                row.appendChild(voterEl);
+                container.appendChild(row);
+            });
+        }
+
+        function displayFoodPairings() {
+            const section = document.getElementById('foodPairingsSection');
+            const container = document.getElementById('foodPairingsResults');
+            container.textContent = '';
+            const entries = allVotes.filter(v => v.foodPairing && v.foodPairing.trim());
+            if (entries.length === 0) { section.style.display = 'none'; return; }
+            section.style.display = '';
+            entries.forEach(v => {
+                const card = document.createElement('div');
+                card.style.cssText = 'background:#1a1a2e;border:1px solid #444;border-radius:6px;padding:12px 16px;margin-bottom:10px;';
+                const nameEl = document.createElement('span');
+                nameEl.style.cssText = 'font-weight:600;color:#ffd700;margin-right:10px;';
+                nameEl.textContent = v.voter || 'Anonymous';
+                const textEl = document.createElement('span');
+                textEl.style.color = '#ccc';
+                textEl.textContent = v.foodPairing;
+                card.appendChild(nameEl);
+                card.appendChild(textEl);
+                container.appendChild(card);
+            });
+        }
+
+        function displayComments() {
+            const container = document.getElementById('commentsResults');
+            if (container.style.display === 'none') return;
+            renderCommentsContent(container);
+        }
+
+        function renderCommentsContent(container) {
+            container.textContent = '';
+            const entries = allVotes.filter(v => v.comments && v.comments.trim());
+            if (entries.length === 0) {
+                const p = document.createElement('p');
+                p.style.color = '#999';
+                p.textContent = 'No comments yet.';
+                container.appendChild(p);
+                return;
+            }
+            entries.forEach(v => {
+                const card = document.createElement('div');
+                card.style.cssText = 'background:#2a2a3e;border:1px solid #444;border-radius:6px;padding:12px 16px;margin-bottom:10px;';
+                const nameEl = document.createElement('div');
+                nameEl.style.cssText = 'font-weight:600;margin-bottom:6px;';
+                nameEl.textContent = v.voter || 'Anonymous';
+                const textEl = document.createElement('div');
+                textEl.style.color = '#ccc';
+                textEl.textContent = v.comments;
+                card.appendChild(nameEl);
+                card.appendChild(textEl);
+                container.appendChild(card);
+            });
+        }
+
+        const COMMENTS_PASS = 'cagemaster'; // Change this passphrase
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('commentsUnlockBtn');
+            const input = document.getElementById('commentsPassphrase');
+            const err = document.getElementById('commentsUnlockError');
+            const results = document.getElementById('commentsResults');
+            const lock = document.getElementById('commentsLock');
+            if (!btn) return;
+            const unlock = () => {
+                if (input.value === COMMENTS_PASS) {
+                    lock.style.display = 'none';
+                    err.style.display = 'none';
+                    results.style.display = '';
+                    renderCommentsContent(results);
+                } else {
+                    err.style.display = '';
+                }
+            };
+            btn.addEventListener('click', unlock);
+            input.addEventListener('keydown', e => { if (e.key === 'Enter') unlock(); });
+        });
+
+        function displayRankings(ranked, totalVoters) {
+            const rankingList = document.getElementById('rankingList');
+            rankingList.innerHTML = '';
+
+            ranked.forEach((movie, index) => {
+                const item = document.createElement('div');
+                item.className = 'ranking-item';
+
+                const position = document.createElement('div');
+                position.className = 'ranking-position';
+                position.textContent = `#${index + 1}`;
+
+                const details = document.createElement('div');
+                details.className = 'movie-details';
+                details.innerHTML = `
+                    <div class="movie-title">${movie.title}</div>
+                    <div class="voters-list">
+                        <strong>Interested:</strong> ${movie.votersInterested.join(', ')}
+                    </div>
+                `;
+
+                const scores = document.createElement('div');
+                scores.className = 'score-breakdown';
+                scores.innerHTML = `
+                    <div class="score-item">
+                        <div class="score-value">${movie.interestPercentage.toFixed(0)}%</div>
+                        <div class="score-label">Interest</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-value">${movie.avgRating}★</div>
+                        <div class="score-label">${movie.ratingsCount} ratings</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-value">${movie.score}</div>
+                        <div class="score-label">Final Score</div>
+                    </div>
+                `;
+
+                item.appendChild(position);
+                item.appendChild(details);
+                item.appendChild(scores);
+                rankingList.appendChild(item);
+            });
+        }
+
+        function generateSchedulePreview(ranked) {
+            const schedulePreview = document.getElementById('schedulePreview');
+            schedulePreview.innerHTML = '';
+
+            let currentTime = 10 * 60; // 10 AM in minutes
+            let selectedMovies = ranked.slice(0, 8); // Top 8 movies
+
+            selectedMovies.forEach((movie, index) => {
+                const hours = Math.floor(currentTime / 60);
+                const minutes = currentTime % 60;
+                const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+                // Find actual runtime
+                const movieData = movies.find(m => m.id == movie.id);
+                const runtime = movieData ? movieData.runtime : 100;
+
+                const slot = document.createElement('div');
+                slot.className = 'time-slot';
+                slot.innerHTML = `
+                    <div class="time">${timeStr}</div>
+                    <div class="movie-info">
+                        <div><strong>#${index + 1}: ${movie.title}</strong></div>
+                        <div class="duration">~${runtime} min</div>
+                    </div>
+                `;
+                schedulePreview.appendChild(slot);
+
+                currentTime += runtime + 15;
+            });
+        }
+
+        function updateStats(ranked, totalVoters) {
+            document.getElementById('totalVoters').textContent = totalVoters;
+            document.getElementById('totalMovies').textContent = ranked.length;
+
+            const avgInterest = ranked.length > 0
+                ? (ranked.reduce((sum, m) => sum + m.interestPercentage, 0) / ranked.length).toFixed(0)
+                : 0;
+            document.getElementById('avgVotes').textContent = avgInterest + '%';
+        }
+
+        function refreshResults() {
+            regenerateRankings();
+        }
+
+        function exportJSON() {
+            const ranked = Object.entries(aggregateVotes()).map(([id, movie]) => ({
+                title: movie.title,
+                interestedVoters: movie.votersInterested,
+                interestedCount: movie.interestedCount,
+                interestPercentage: ((movie.interestedCount / allVotes.length) * 100).toFixed(1),
+                averageRating: movie.ratings.length > 0 ? (movie.totalRating / movie.ratings.length).toFixed(2) : 0,
+                ratingCount: movie.ratings.length
+            }))
+                .filter(m => m.interestedCount > 0)
+                .sort((a, b) => b.interestedCount - a.interestedCount);
+
+            const dataStr = JSON.stringify({
+                exportedAt: new Date().toISOString(),
+                totalVoters: allVotes.length,
+                voters: allVotes.map(v => v.voter),
+                results: ranked
+            }, null, 2);
+
+            downloadFile(dataStr, 'marathon-results.json', 'application/json');
+        }
+
+        function exportCSV() {
+            const aggregated = aggregateVotes();
+            const ranked = Object.entries(aggregated)
+                .map(([id, movie]) => ({
+                    title: movie.title,
+                    interested_count: movie.interestedCount,
+                    interest_percentage: ((movie.interestedCount / allVotes.length) * 100).toFixed(1),
+                    avg_rating: movie.ratings.length > 0 ? (movie.totalRating / movie.ratings.length).toFixed(2) : 0,
+                    rating_count: movie.ratings.length,
+                    voters_interested: `"${movie.votersInterested.join(', ')}"`
+                }))
+                .filter(m => m.interested_count > 0)
+                .sort((a, b) => b.interested_count - a.interested_count);
+
+            let csv = 'Rank,Movie Title,Interested Count,Total Voters,Interest %,Avg Rating,Rating Count,Who Voted\n';
+            ranked.forEach((movie, index) => {
+                csv += `${index + 1},"${movie.title}",${movie.interested_count},${allVotes.length},${movie.interest_percentage},${movie.avg_rating},${movie.rating_count},${movie.voters_interested}\n`;
+            });
+
+            downloadFile(csv, 'marathon-results.csv', 'text/csv');
+        }
+
+        function copyScheduleToClipboard() {
+            const aggregated = aggregateVotes();
+            const ranked = Object.entries(aggregated)
+                .map(([id, movie]) => ({
+                    ...movie,
+                    interestPercentage: (movie.interestedCount / allVotes.length) * 100,
+                    avgRating: movie.ratings.length > 0 ? movie.totalRating / movie.ratings.length : 0
+                }))
+                .filter(m => m.interestedCount > 0)
+                .sort((a, b) => (b.interestPercentage * 0.7 + b.avgRating / 5 * 100 * 0.3) - (a.interestPercentage * 0.7 + a.avgRating / 5 * 100 * 0.3))
+                .slice(0, 8);
+
+            let schedule = 'Nic Cage Marathon Schedule\n\n';
+            let currentTime = 10 * 60;
+
+            ranked.forEach((movie, index) => {
+                const hours = Math.floor(currentTime / 60);
+                const minutes = currentTime % 60;
+                const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+                const movieData = movies.find(m => m.id == movie.id);
+                const runtime = movieData ? movieData.runtime : 100;
+
+                schedule += `${timeStr} - ${movie.title} (${movie.interestedCount} voters)\n`;
+                currentTime += runtime + 15;
+            });
+
+            navigator.clipboard.writeText(schedule).then(() => {
+                alert('Schedule copied to clipboard!');
+            });
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function aggregateVotes() {
+            const movieScores = {};
+
+            allVotes.forEach(vote => {
+                Object.entries(vote.votes || {}).forEach(([movieId, voteData]) => {
+                    if (!movieScores[movieId]) {
+                        const movie = movies.find(m => m.id == movieId);
+                        movieScores[movieId] = {
+                            id: movieId,
+                            title: movie ? movie.title : `Movie ${movieId}`,
+                            interestedCount: 0,
+                            totalRating: 0,
+                            votersInterested: [],
+                            ratings: []
+                        };
+                    }
+
+                    if (voteData.interested) {
+                        movieScores[movieId].interestedCount++;
+                        movieScores[movieId].votersInterested.push(vote.voter);
+                    }
+
+                    if (voteData.rating > 0) {
+                        movieScores[movieId].totalRating += voteData.rating;
+                        movieScores[movieId].ratings.push(voteData.rating);
+                    }
+                });
+            });
+
+            return movieScores;
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            setTimeout(() => {
+                errorDiv.classList.remove('show');
+            }, 5000);
+        }
+
+        // Expose functions for inline onclick handlers
+        window.refreshResults = refreshResults;
+        window.exportJSON = exportJSON;
+        window.exportCSV = exportCSV;
+        window.copyScheduleToClipboard = copyScheduleToClipboard;
+
+        // Initialize
+        loadMovies().then(() => {
+            setupRealtimeListener();
+        });
+    </script>
+</body>
+
+</html>
