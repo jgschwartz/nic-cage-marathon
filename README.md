@@ -1,264 +1,111 @@
-# 🎬 Nic Cage Marathon - Voting & Scheduling System
+# Nic Cage Marathon — Voting System
 
-A complete web-based voting and aggregation system for planning the ultimate Nicolas Cage movie marathon!
+A Firebase-hosted web app for voting on which Nicolas Cage movies to watch at a marathon event. Voters submit preferences and enthusiasm ratings; the organizer sees a live ranked results dashboard.
 
-## Quick Start
-
-1. **Open `voting-form.html`** in your web browser
-2. **Share the link** with your friends (or send them the file)
-3. Everyone fills out their preferences and downloads their vote file
-4. **Collect all vote files** and open `results-dashboard.html`
-5. **Upload all vote files** to see the aggregate rankings
-
-## Files in This Project
-
-- **`movies.json`** - Database of 40+ Nicolas Cage films with IMDb data
-- **`voting-form.html`** - Voting interface (share this with friends!)
-- **`results-dashboard.html`** - Results aggregation and scheduling dashboard
-- **`README.md`** - This file
-
-## How the Voting System Works
-
-### For Voters (Your Friends)
-
-1. Open `voting-form.html` in a web browser
-2. Enter your name at the top
-3. Check the boxes for movies you'd be interested in watching
-4. Use the star ratings to indicate which ones you're REALLY excited about:
-   - ⭐ = Mildly interested
-   - ⭐⭐ = Somewhat interested
-   - ⭐⭐⭐ = Pretty interested
-   - ⭐⭐⭐⭐ = Really want to see
-   - ⭐⭐⭐⭐⭐ = MUST WATCH
-5. Click "Submit My Votes" to download a JSON file
-6. Send that JSON file to you (the organizer)
-
-### Features in the Voting Form
-
-- **Search** movies by title
-- **Sort** by year, IMDb rating, or alphabetically
-- **Bulk actions**: Select All, Clear All, Clear Ratings
-- **Live statistics** showing how many you've voted on
-- **Movie information** including poster, plot, runtime, year, and IMDb rating
-
-## How the Results Dashboard Works
-
-1. Collect all the JSON vote files from your friends
-2. Open `results-dashboard.html`
-3. Click "Select Vote Files" and choose multiple files at once
-4. The system will:
-   - Count total voters
-   - Calculate interest percentage for each movie
-   - Weight ratings by voter enthusiasm
-   - Generate a final ranking
-   - Propose a sample schedule
-
-### Ranking Algorithm Explained
-
-The final score is calculated as:
-```
-Final Score = (% of voters interested × 70) + (average rating / 5 × 100 × 30)
-```
-
-This means:
-- **70% of the weight** comes from broad interest (how many people want to see it)
-- **30% of the weight** comes from depth of interest (how much the interested people want to see it)
-
-Example:
-- Movie A: 8/10 voters interested (80%), average rating 4.5/5
-  - Score = (80 × 0.7) + (4.5/5 × 100 × 0.3) = 56 + 27 = **83**
-- Movie B: 9/10 voters interested (90%), average rating 2/5
-  - Score = (90 × 0.7) + (2/5 × 100 × 0.3) = 63 + 12 = **75**
-
-Movie A ranks higher because while Movie B has more interest, Movie A has more passionate fans.
-
-### Results Dashboard Features
-
-- **Final Rankings** with breakdown of:
-  - Interest percentage
-  - Average star rating
-  - Final composite score
-  - List of voters who want to see each movie
-- **Sample Schedule** for a 10 AM - midnight marathon (top 8 movies)
-- **Export Options**:
-  - JSON (detailed results)
-  - CSV (for spreadsheet software)
-  - Copy schedule to clipboard
-
-## Marathon Schedule Tips
-
-### Suggested Time Slots (10 AM - Midnight)
-
-```
-10:00 AM - Less popular films (early arrivals, completionists)
-1:00 PM  - Mid-tier interest movies (growing crowd)
-4:00 PM  - Strong contenders (afternoon crew joins)
-7:00 PM  - TOP PICKS (prime time, everyone here)
-10:00 PM - Crowd pleasers/late-night fun (night owls)
-```
-
-This pattern allows friends to **drop in and out** while ensuring the most-voted-for movies play when you expect the biggest crowd.
-
-### Adjusting the Schedule
-
-1. After getting results, you can manually reorder movies based on:
-   - **Runtime** (shorter movies for early/late slots, epics for evening)
-   - **Tone** (mix action with drama for variety)
-   - **Related films** (show The Sorcerer's Apprentice before National Treasure, etc.)
-   - **Energy levels** (lighter films in early morning/late night, intense films mid-day)
-
-2. Use the CSV export to edit the schedule in a spreadsheet
-
-## 🍿 Themed Food Suggestions
-
-### Nic Cage Movie-Inspired Snacks
-
-#### By Movie
-
-- **The Rock** → Savory snacks: popcorn with herbs, pretzels, jerky
-- **Con Air** → Blue drinks and sky-themed: blue sports drinks, cotton candy
-- **Face/Off** → Dual-sided snacks: two-toned cookies, chips with two dips
-- **Raising Arizona** → Southwestern: jalapeño poppers, salsa, churros
-- **National Treasure** → Gold-themed: goldfish crackers, apple pie, honey-themed treats
-- **The Family Man** → Comfort food: hot chocolate, apple cider, cookies
-- **Moonstruck** → Italian: pasta snacks, Italian breadsticks, cannoli
-- **Wild at Heart** → Southern: fried okra, biscuits, sweet tea
-- **Adaptation** → Literary snacks: "bookworm" candy, brain-shaped gummies
-- **Kick-Ass** → Superhero fuel: trail mix, energy bars, pizza
-
-#### General Marathon Snacks
-
-**Sweet:**
-- Popcorn varieties (caramel, cinnamon, chocolate-drizzled)
-- Candy (gummy bears, M&Ms, licorice)
-- Brownies and cookies
-- Fruit skewers with chocolate
-- Candy-coated almonds
-
-**Savory:**
-- Cheese and charcuterie board
-- Chips with multiple dips (salsa, queso, ranch)
-- Pretzels and nuts
-- Veggie tray with dip
-- Pepperoni pizza rolls
-- Hummus and pita chips
-
-**Drinks:**
-- Coffee and tea bar (for morning sessions)
-- Lemonade or iced tea
-- Sodas and sparkling water
-- Hot chocolate (for evening)
-- Wine or beer (for adults)
-
-### Themed Break Activities
-
-- 15-minute breaks between films: stretch, snack refill, bathroom break
-- 30-minute lunch break (recommend around 1-2 PM)
-- Dinner break around 6-7 PM (before prime evening movies)
-
-## Movie Database
-
-The included `movies.json` contains 40 Nicolas Cage films including:
-- **Classics**: Raising Arizona, Wild at Heart, Moonstruck, The Rock, Face/Off
-- **Cult Favorites**: Vampire's Kiss, The Wicker Man, Season of the Witch
-- **Recent**: Pig, Unbearable Weight of Massive Talent, Dream Scenario, Renfield
-- **Family-Friendly**: The Croods series, National Treasure, The Sorcerer's Apprentice
-- **B-Movies & Experimental**: Willy's Wonderland, Mom and Dad, Color Out of Space
-
-### Adding More Movies
-
-1. Add a new entry to `movies.json` with at minimum `id`, `title`, `year`, and `imdbId`:
-
-```json
-{
-  "id": 51,
-  "title": "Movie Title",
-  "year": 2020,
-  "runtime": null,
-  "imdbRating": null,
-  "rtCriticRating": null,
-  "rtAudienceRating": null,
-  "plot": "Brief description of the plot.",
-  "posterUrl": null,
-  "imdbId": "tt1234567",
-  "rtUrl": null
-}
-```
-
-2. Run `python3 enrich-movies.py` — this fetches `posterUrl`, `imdbRating`, `rtCriticRating`, and `runtime` from the OMDb API automatically.
-
-3. Manually fill in the remaining fields:
-   - **`rtUrl`** — find the movie on Rotten Tomatoes and copy the path (e.g. `/m/movie_title`)
-   - **`rtAudienceRating`** — the audience score is not available from OMDb; enter it manually from the RT page
-   - **`fresh`**: `true` — add this field only if the movie is Certified Fresh on RT
-
-## Technical Details
-
-### How Voting Works
-
-Each voter's submission creates a JSON file containing:
-- Voter name
-- Timestamp
-- Checkbox votes (interested: true/false)
-- Star ratings (1-5)
-- List of interested movies with ratings
-
-### How Results Are Aggregated
-
-The dashboard:
-1. Reads all JSON vote files
-2. Counts interest count per movie
-3. Calculates average ratings
-4. Applies the weighted scoring algorithm
-5. Sorts by final score
-6. Generates visualizations and exports
-
-### Exporting Results
-
-- **JSON**: Full detailed results with all voter data
-- **CSV**: Spreadsheet-friendly format for further analysis
-- **Schedule**: Plain text format for sharing
-
-## Troubleshooting
-
-### "movies.json not found" error
-
-Make sure `movies.json`, `voting-form.html`, and `results-dashboard.html` are all in the same folder.
-
-### Vote file not showing in dashboard
-
-Verify the vote file was properly saved and is valid JSON. Make sure it's named with the `.json` extension.
-
-### Schedule times seem off
-
-The sample schedule uses estimated runtimes. You can manually adjust by:
-1. Exporting results to CSV
-2. Editing runtimes in a spreadsheet
-3. Recalculating the schedule
-
-## Tips for Success
-
-1. **Send instructions early**: Give people a few days to vote
-2. **Send movies.json too**: Include a note that they can preview the full list before opening the form
-3. **Collect votes in one folder**: Keep all JSON files organized before uploading to dashboard
-4. **Manual adjustments**: The algorithm suggests an order, but you can reorder based on runtime, mood, or logistics
-5. **Communicate the schedule**: Let people know start/end times and when key movies play
-6. **Plan food prep**: Prepare/acquire snacks beforehand; don't spend the whole day cooking
-7. **Test run**: Try opening the voting form and submitting a test vote to familiarize yourself with the process
-
-## Browser Compatibility
-
-Works best in modern browsers:
-- Chrome/Edge 90+
-- Firefox 88+
-- Safari 14+
-
-## License & Attribution
-
-This voting system is provided as-is for personal use. Movie data sourced from IMDb (public information).
+**Live site:** https://nic-cage-marathon.web.app
 
 ---
 
-**Happy Nic Cage Binge-Watching! 🎬🍿**
+## How It Works
 
-*"Not the bees! Not the bees!"* - Nicolas Cage (and us, when planning a movie marathon)
+### For Voters
+
+1. Open the voting link
+2. Enter your name
+3. Check movies you're interested in, or just click a star to mark interested and rate in one step
+4. Rate your enthusiasm 1–5 stars
+5. Optionally add food pairing ideas, comments, or write-in movie suggestions
+6. Submit — your vote is saved instantly to Firebase
+
+### For the Organizer
+
+Open the results dashboard (link in the voting form) to see:
+- Live rankings weighted by interest % and average enthusiasm rating
+- Per-movie voter lists and score breakdowns
+- A suggested schedule starting at 10 AM
+- Write-in candidate suggestions from voters
+- Food pairing ideas (public)
+- Voter comments (passphrase-protected — default: `cagemaster`, set in `results-dashboard.html`)
+- JSON and CSV export
+
+---
+
+## File Structure
+
+```
+├── voting-form.html          # Voter-facing page
+├── results-dashboard.html    # Organizer results dashboard
+├── movies.json               # Movie database
+├── firestore.rules           # Firestore security rules
+├── firebase.json             # Firebase hosting + Firestore config
+├── .firebaserc               # Firebase project reference
+├── enrich-movies.py          # Dev script: fetch ratings/posters from OMDb API
+├── assets/                   # Images (RT icons, favicon, header images)
+├── FIREBASE-QUICKSTART.md    # Setup guide for deploying your own instance
+└── PLANNING-CHECKLIST.md     # Event logistics checklist
+```
+
+---
+
+## Ranking Algorithm
+
+```
+Score = (interest % × 0.7) + (avg rating / 5 × 100 × 0.3)
+```
+
+70% of the score is how many people want to see the movie; 30% is how enthusiastic those people are. This surfaces broad consensus while still rewarding films people feel strongly about.
+
+---
+
+## Managing the Movie List
+
+Movies are stored in `movies.json`. Each entry has:
+
+```json
+{
+  "id": 1,
+  "title": "Raising Arizona",
+  "year": 1987,
+  "runtime": 94,
+  "imdbRating": 7.3,
+  "rtCriticRating": 91,
+  "rtAudienceRating": 88,
+  "fresh": true,
+  "plot": "A childless couple...",
+  "posterUrl": "https://...",
+  "imdbId": "tt0093popularity",
+  "rtUrl": "/m/raising_arizona"
+}
+```
+
+**To add a movie:**
+
+1. Add an entry to `movies.json` with at minimum `id`, `title`, `year`, and `imdbId`
+2. Run `python3 enrich-movies.py` to auto-fill `posterUrl`, `imdbRating`, `rtCriticRating`, and `runtime` from the OMDb API
+3. Manually fill in:
+   - `rtUrl` — copy the path from the movie's Rotten Tomatoes URL (e.g. `/m/raising_arizona`)
+   - `rtAudienceRating` — not available from OMDb; enter from the RT page
+   - `"fresh": true` — add only if the movie is Certified Fresh on RT
+
+The OMDb API key is hardcoded at the top of `enrich-movies.py`. Get a free key at https://www.omdbapi.com/apikey.aspx if you need to replace it.
+
+---
+
+## Deployment
+
+See `FIREBASE-QUICKSTART.md` for full setup instructions. The short version:
+
+```bash
+npm install -g firebase-tools
+firebase login
+firebase deploy
+```
+
+---
+
+## Tech Stack
+
+- **Frontend:** Vanilla HTML/CSS/JavaScript — no build tools
+- **Database:** Firebase Firestore (real-time)
+- **Hosting:** Firebase Hosting
+- **Movie data:** OMDb API (one-time enrichment script)
