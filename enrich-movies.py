@@ -4,12 +4,17 @@ One-time script to enrich movies.json with accurate data from the OMDb API.
 
 Fetches for each movie: poster URL, IMDb rating, runtime, and RT critic score.
 Audience scores are not available via OMDb — update rtAudienceRating manually.
+RT links (rtUrl), the fresh attribute, and audience ratings must be added manually.
+
+The OMDb API key is hardcoded at the top of this file (OMDB_API_KEY).
+If you need a new key, get one free at https://www.omdbapi.com/apikey.aspx.
 
 Usage:
-  1. Get a free API key at https://www.omdbapi.com/apikey.aspx (takes ~2 min)
-  2. Run:  python3 enrich-movies.py
-  3. Enter your key when prompted
-  4. Commit the updated movies.json
+  1. Add new movies to movies.json with at least title, year, and imdbId
+  2. Replace OMDB_API_KEY below with your key if needed
+  3. Run:  python3 enrich-movies.py
+  4. Manually verify/update: rtUrl, rtAudienceRating, fresh (certified fresh flag)
+  5. Commit the updated movies.json
 """
 
 import json

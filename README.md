@@ -167,19 +167,30 @@ The included `movies.json` contains 40 Nicolas Cage films including:
 
 ### Adding More Movies
 
-Edit `movies.json` to add more Nic Cage films. Format:
+1. Add a new entry to `movies.json` with at minimum `id`, `title`, `year`, and `imdbId`:
 
 ```json
 {
-  "id": 41,
+  "id": 51,
   "title": "Movie Title",
   "year": 2020,
-  "runtime": 120,
-  "imdbRating": 7.5,
-  "plot": "Brief description of the plot",
-  "posterUrl": "https://link-to-poster-image.jpg"
+  "runtime": null,
+  "imdbRating": null,
+  "rtCriticRating": null,
+  "rtAudienceRating": null,
+  "plot": "Brief description of the plot.",
+  "posterUrl": null,
+  "imdbId": "tt1234567",
+  "rtUrl": null
 }
 ```
+
+2. Run `python3 enrich-movies.py` — this fetches `posterUrl`, `imdbRating`, `rtCriticRating`, and `runtime` from the OMDb API automatically.
+
+3. Manually fill in the remaining fields:
+   - **`rtUrl`** — find the movie on Rotten Tomatoes and copy the path (e.g. `/m/movie_title`)
+   - **`rtAudienceRating`** — the audience score is not available from OMDb; enter it manually from the RT page
+   - **`fresh`**: `true` — add this field only if the movie is Certified Fresh on RT
 
 ## Technical Details
 
