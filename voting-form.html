@@ -805,7 +805,7 @@
                             votes[movie.id].rating = 3;
                         }
                     } else {
-                        votes[movie.id].rating = undefined;
+                        delete votes[movie.id].rating;
                     }
                     updateStarStates(movie.id, checkbox.checked, votes[movie.id].rating);
                     updateStats();
@@ -940,7 +940,7 @@
                 star.classList.remove('active');
             });
             Object.keys(votes).forEach(id => {
-                votes[id].rating = undefined;
+                delete votes[id].rating;
             });
             updateStats();
         }
@@ -967,10 +967,17 @@
 
             try {
                 // Prepare submission data
+                const cleanVotes = {};
+                Object.entries(votes).forEach(([id, v]) => {
+                    const entry = { interested: v.interested ?? false };
+                    if (v.rating !== undefined) entry.rating = v.rating;
+                    cleanVotes[id] = entry;
+                });
+
                 const submission = {
                     voter: voterName,
                     timestamp: window.serverTimestamp(),
-                    votes: votes,
+                    votes: cleanVotes,
                     foodPairing: document.getElementById('foodPairing').value.trim(),
                     comments: document.getElementById('comments').value.trim(),
                     writeIns: writeIns.map(w => ({ key: w.key, title: w.title, enthusiasm: w.enthusiasm })),
